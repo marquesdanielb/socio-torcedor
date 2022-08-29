@@ -25,12 +25,12 @@
                 <td><?php echo $torcedor->getEmail(); ?></td>
                 <td><?php echo traduz_ativo_para_exibir($torcedor->getAtivo()); ?></td>
                 <td>
-                    <a href="editar.php?id=<?php echo $torcedor->getId(); ?>"/> 
+                    <a href="index.php?rota=editar&id=<?php echo $torcedor->getId(); ?>"/> 
                         Editar
                     </a>
                 </td>
                 <td>
-                    <a href="remover.php?id=<?php echo $torcedor->getId(); ?>"/> 
+                    <a href="index.php?rota=remover&id=<?php echo $torcedor->getId(); ?>"/> 
                         Remover
                     </a>
                 </td>

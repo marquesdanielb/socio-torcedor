@@ -1,14 +1,7 @@
 <?php 
 
-require "config.php";
-require "banco.php";
-require "ajudantes.php";
-require "classes/Torcedor.php";
-require "classes/RepositorioTorcedores.php";
-
-$repositorio_torcedores = new RepositorioTorcedores($pdo);
-
 $exibir_tabela = true;
+
 $tem_erros = false;
 $erros_validacao = [];
 
@@ -82,10 +75,10 @@ if (array_key_exists('nome', $_POST)) {
     }
 
     $repositorio_torcedores->salvar($torcedor);
-    header('Location: torcedores.php');
+    header('Location: index.php?rota=torcedores');
     die();
 }
 
 $lista_torcedores = $repositorio_torcedores->buscar_torcedores();
 
-include "template.php";
+require __DIR__ . "/../views/template.php";
