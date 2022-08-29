@@ -41,7 +41,7 @@
         </fieldset>
         <label>
             Membro ativo:
-            <input type="checkbox" name="ativo" value="<?php echo traduz_ativo_para_banco($torcedor->getAtivo()); ?>" value="1"/>
+            <input type="checkbox" name="ativo" value="<?php echo $torcedor->getAtivo(); ?>" value="1"/>
         </label>
         <input type="submit" value="Cadastrar">
     </form>

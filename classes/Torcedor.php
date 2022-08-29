@@ -113,12 +113,12 @@ class Torcedor
         return $this->email;
     }
 
-    public function setAtivo(bool $ativo)
+    public function setAtivo(int $ativo)
     {
-        $this->ativo = $ativo;
+        $this->ativo = (int) $ativo;
     }
 
-    function getAtivo(): bool
+    function getAtivo(): int
     {
         return $this->ativo;
     }

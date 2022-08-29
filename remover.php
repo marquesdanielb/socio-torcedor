@@ -1,7 +1,10 @@
 <?php
 
+require "config.php";
 require "banco.php";
+require "classes/RepositorioTorcedores.php";
 
-remover_torcedor($_GET['id'], $conexao);
+$repositorio_torcedores = new RepositorioTorcedores($pdo);
+$repositorio_torcedores->remover_torcedor($_GET['id']);
 header('Location: torcedores.php');
 die();

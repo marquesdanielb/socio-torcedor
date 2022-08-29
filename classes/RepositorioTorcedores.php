@@ -2,11 +2,11 @@
 
 class RepositorioTorcedores
 {
-    private $conexao;
+    private $pdo;
 
-    public function __construct(mysqli $conexao)
+    public function __construct(PDO $pdo)
     {
-        $this->conexao = $conexao;
+        $this->pdo = $pdo;
     }
 
     public function Salvar(Torcedor $torcedor)
@@ -26,45 +26,48 @@ class RepositorioTorcedores
         $sqlSalvar = "INSERT INTO torcedores 
                 (nome, documento, cep, endereco, bairro, cidade, uf, telefone, email, ativo)
                 VALUES
-                ('{$nome}',
-                '{$documento}',
-                {$cep},
-                '{$endereco}',
-                '{$bairro}',
-                '{$cidade}',
-                '{$uf}',
-                '{$telefone}',
-                '{$email}',
-                '{$ativo}')
+                (:nome, :documento, :cep, :endereco, :bairro, :cidade, :uf, :telefone, :email, :ativo)
                 ";
-
-        $this->conexao->query($sqlSalvar);
+        $query = $this->pdo->prepare($sqlSalvar);
+        $query->execute([
+            'nome' => $torcedor->getNome(),
+            'documento' => $torcedor->getDocumento(),
+            'cep' => $torcedor->getCep(),
+            'endereco' => $torcedor->getEndereco(),
+            'bairro' => $torcedor->getBairro(),
+            'cidade' => $torcedor->getCidade(),
+            'uf' => $torcedor->getUf(),
+            'telefone' => $torcedor->getTelefone(),
+            'email' => $torcedor->getEmail(),
+            'ativo' => $torcedor->getAtivo(),
+        ]);
     }
 
     public function editar_torcedor(Torcedor $torcedor)
     {
-        $id = $torcedor->getId();
-        $telefone = $torcedor->getTelefone();
-        $email = $torcedor->getEmail();
-        $ativo = $torcedor->getAtivo();
-
         $sqlEditar = "UPDATE torcedores SET
-                    telefone = '{$telefone}',
-                    email = '{$email}',
-                    ativo = {$ativo}
-                WHERE id={$id}";
+                            telefone = :telefone,
+                            email = :email,
+                            ativo = :ativo
+                        WHERE id = :id";
+        $query = $this->pdo->prepare($sqlEditar);
 
-        $this->conexao->query($sqlEditar);
+        $query->execute([
+            'id' => $torcedor->getId(),
+            'telefone' => $torcedor->getTelefone(),
+            'email' => $torcedor->getEmail(),
+            'ativo' => $torcedor->getAtivo(),
+        ]);
     }
 
     public function buscar_torcedores(): array
     {
         $sqlBusca = "SELECT * FROM torcedores";
-        $resultado = $this->conexao->query($sqlBusca);
+        $resultado = $this->pdo->query($sqlBusca, PDO::FETCH_CLASS, 'Torcedor');
         
         $torcedores = [];
         
-        while ($torcedor = $resultado->fetch_object('Torcedor')) {
+        foreach ($resultado as $torcedor) {
             $torcedores[] = $torcedor;
         }
     
@@ -73,18 +76,25 @@ class RepositorioTorcedores
 
     public function buscar_torcedor(int $torcedor_id)
     {
-        $sqlBusca = "SELECT * FROM torcedores WHERE id =".$torcedor_id;
-        $resultado = $this->conexao->query($sqlBusca);
+        $sqlBusca = "SELECT * FROM torcedores WHERE id = :id";
+        $query = $this->pdo->prepare($sqlBusca);
 
-        $torcedor = $resultado->fetch_object('Torcedor');
+        $query->execute([
+            'id' => $torcedor_id,
+        ]);
+
+        $torcedor = $query->fetchObject('Torcedor');
 
         return $torcedor;
     }
 
-    public function remover(int $torcedor_id)
+    public function remover_torcedor(int $id)
     {
-        $sqlRemover = "DELETE FROM torcedores WHERE id=".$id;
-
-        $this->conexao->query($sqlRemover);
+        $sqlRemover = "DELETE FROM torcedores WHERE id = :id";
+        $query = $this->pdo->prepare($sqlRemover);
+        
+        $query->execute([
+            'id' => $id
+        ]);
     }
 }

@@ -2,17 +2,17 @@
 
 session_start();
 
+require "config.php";
 require "banco.php";
 require "ajudantes.php";
 require "classes/Torcedor.php";
 require "classes/RepositorioTorcedores.php";
 
-$repositorio_torcedores = new RepositorioTorcedores($conexao);
+$repositorio_torcedores = new RepositorioTorcedores($pdo);
+$torcedor = $repositorio_torcedores->buscar_torcedor($_GET['id']);
 
 $exibir_tabela = false;
 $tem_erros = false;
-
-$torcedor = $repositorio_torcedores->buscar_torcedor($_GET['id']);
 
 if (array_key_exists('nome', $_POST)) {
     
@@ -29,14 +29,14 @@ if (array_key_exists('nome', $_POST)) {
     }
 
     if (array_key_exists('ativo', $_POST)) {
-        $torcedor->setAtivo(1);
+        $torcedor->setAtivo(true);
     } else {
-        $torcedor->setAtivo(0);
+        $torcedor->setAtivo(false);
     }
 
-    $repositorio_torcedores->editar_torcedor($torcedor, $conexao);
+    $repositorio_torcedores->editar_torcedor($torcedor);
     header('Location: torcedores.php');
     die();
 }
 
-require "template.php";
+include "template.php";

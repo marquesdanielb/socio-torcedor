@@ -1,11 +1,12 @@
 <?php 
 
+require "config.php";
 require "banco.php";
 require "ajudantes.php";
 require "classes/Torcedor.php";
 require "classes/RepositorioTorcedores.php";
 
-$repositorio_torcedores = new RepositorioTorcedores($conexao);
+$repositorio_torcedores = new RepositorioTorcedores($pdo);
 
 $exibir_tabela = true;
 $tem_erros = false;
