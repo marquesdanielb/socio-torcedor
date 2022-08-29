@@ -13,7 +13,7 @@ function salvar($torcedor, $conexao)
                 (nome, documento, cep, endereco, bairro, cidade, uf, telefone, email, ativo)
                 VALUES
                 ('{$torcedor['nome']}',
-                {$torcedor['documento']},
+                '{$torcedor['documento']}',
                 {$torcedor['cep']},
                 '{$torcedor['endereco']}',
                 '{$torcedor['bairro']}',
@@ -53,8 +53,16 @@ function editar_torcedor($torcedor, $conexao)
 {
     $sqlEditar = "UPDATE torcedores SET
                     telefone = {$torcedor['telefone']},
-                    email = '{$torcedor['email']}'
+                    email = '{$torcedor['email']}',
+                    ativo = {$torcedor['ativo']}
                 WHERE id={$torcedor['id']}";
-    
-    mysqli_query($sqlEditar);
+    var_dump($sqlEditar);
+    mysqli_query($conexao, $sqlEditar);
+}
+
+function remover_torcedor($id, $conexao)
+{
+    $sqlRemover = "DELETE FROM torcedores WHERE id=".$id;
+
+    mysqli_query($conexao, $sqlRemover);
 }

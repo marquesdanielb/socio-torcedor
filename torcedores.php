@@ -1,71 +1,90 @@
 <?php 
 
 require "banco.php";
+require "ajudantes.php";
+require "classes/Torcedor.php";
+require "classes/RepositorioTorcedores.php";
 
-if (array_key_exists('nome', $_GET) && $_GET['nome'] != '') {
-    $torcedor = [];
+$repositorio_torcedores = new RepositorioTorcedores($conexao);
 
-    $torcedor['nome'] = $_GET['nome'];
+$exibir_tabela = true;
+$tem_erros = false;
+$erros_validacao = [];
+
+$torcedor = new Torcedor();
+$torcedor->setAtivo(true);
+
+if (array_key_exists('nome', $_POST)) {
+
+    $torcedor->setNome($_POST['nome']);
+
+    if (array_key_exists('documento', $_POST)) {   
+        $torcedor->setDocumento($_POST['documento']);
+    } else {
+        $tem_erros = true;
+        $erros_validacao['documento'] = 'O documento do torcedore é obrigatório';
+    }
+
+    if (array_key_exists('cep', $_POST)) {   
+        $torcedor->setCep($_POST['cep']);
+    } else {
+        $tem_erros = true;
+        $erros_validacao['cep'] = 'O cep do torcedore é obrigatório';
+    }
+
+    if (array_key_exists('endereco', $_POST)) {   
+        $torcedor->setEndereco($_POST['endereco']);
+    } else {
+        $tem_erros = true;
+        $erros_validacao['endereco'] = 'O endereço do torcedore é obrigatório';
+    }
+
+    if (array_key_exists('bairro', $_POST)) {   
+        $torcedor->setBairro($_POST['bairro']);
+    } else {
+        $tem_erros = true;
+        $erros_validacao['bairro'] = 'O bairro do torcedore é obrigatório';
+    }
     
-    if (array_key_exists('documento', $_GET)) {   
-        $torcedor['documento'] = $_GET['documento'];
+    if (array_key_exists('cidade', $_POST)) {   
+        $torcedor->setCidade($_POST['cidade']);
     } else {
-        $torcedor['documento'] = 0;
+        $tem_erros = true;
+        $erros_validacao['cidade'] = 'A cidade do torcedore é obrigatória';
     }
 
-    if (array_key_exists('cep', $_GET)) {   
-        $torcedor['cep'] = $_GET['cep'];
+    if (array_key_exists('uf', $_POST)) {   
+        $torcedor->setUf($_POST['uf']);
     } else {
-        $torcedor['cep'] = 0;
+        $tem_erros = true;
+        $erros_validacao['uf'] = 'O estado do torcedore é obrigatório';
     }
 
-    if (array_key_exists('endereco', $_GET)) {   
-        $torcedor['endereco'] = $_GET['endereco'];
+    if (array_key_exists('telefone', $_POST)) {   
+        $torcedor->setTelefone($_POST['telefone']);
     } else {
-        $torcedor['endereco'] = '';
+        $tem_erros = true;
+        $erros_validacao['telefone'] = 'O telefone do torcedore é obrigatório';
     }
 
-    if (array_key_exists('bairro', $_GET)) {   
-        $torcedor['bairro'] = $_GET['bairro'];
+    if (array_key_exists('email', $_POST)) {   
+        $torcedor->setEmail($_POST['email']);
     } else {
-        $torcedor['bairro'] = '';
-    }
-    
-    if (array_key_exists('cidade', $_GET)) {   
-        $torcedor['cidade'] = $_GET['cidade'];
-    } else {
-        $torcedor['cidade'] = '';
+        $tem_erros = true;
+        $erros_validacao['email'] = 'O email do torcedore é obrigatório';
     }
 
-    if (array_key_exists('uf', $_GET)) {   
-        $torcedor['uf'] = $_GET['uf'];
+    if (array_key_exists('ativo', $_POST)) {
+        $torcedor->setAtivo(1);
     } else {
-        $torcedor['uf'] = '';
+        $torcedor->setAtivo(0);
     }
 
-    if (array_key_exists('telefone', $_GET)) {   
-        $torcedor['telefone'] = $_GET['telefone'];
-    } else {
-        $torcedor['telefone'] = '';
-    }
-
-    if (array_key_exists('email', $_GET)) {   
-        $torcedor['email'] = $_GET['email'];
-    } else {
-        $torcedor['email'] = '';
-    }
-
-    if (array_key_exists('ativo', $_GET)) {   
-        $torcedor['ativo'] = false;
-    } else {
-        $torcedor['ativo'] = true;
-    }
-
-    salvar($torcedor, $conexao);
+    $repositorio_torcedores->salvar($torcedor);
     header('Location: torcedores.php');
     die();
 }
 
-$lista_torcedores = buscar_torcedores($conexao);
+$lista_torcedores = $repositorio_torcedores->buscar_torcedores();
 
 include "template.php";

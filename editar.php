@@ -3,35 +3,38 @@
 session_start();
 
 require "banco.php";
+require "ajudantes.php";
+require "classes/Torcedor.php";
+require "classes/RepositorioTorcedores.php";
 
-if (array_key_exists('nome', $_GET) && $_GET['nome'] != '') {
-    $torcedor = [
-        'id' => $_GET['id'],
-        'nome' => $_GET['nome'],
-        'documento' => $_GET['documento'],
-        'cep' => $_GET['cep'],
-        'endereco' => $_GET['endereco'],
-        'bairro' => $_GET['bairro'],
-        'cidade' => $_GET['cidade'],
-        'uf' => $_GET['uf'],
-        'telefone' => $_GET['telefone'],
-        'email' => $_GET['email'],
-        'ativo' => $_GET['ativo'],
-    ];
+$repositorio_torcedores = new RepositorioTorcedores($conexao);
 
-    if (array_key_exists('telefone', $_GET)) {
-        $torcedor['telefone'] = $_GET['telefone'];
+$exibir_tabela = false;
+$tem_erros = false;
+
+$torcedor = $repositorio_torcedores->buscar_torcedor($_GET['id']);
+
+if (array_key_exists('nome', $_POST)) {
+    
+    if (array_key_exists('telefone', $_POST)) {
+        $torcedor->setTelefone($_POST['telefone']);
     } else {
-        $torcedor['telefone'] = 0;
+        $torcedor->setTelefone(0);
     }
 
-    if (array_key_exists('email', $_GET)) {
-        $torcedor['email'] = $_GET['email'];
+    if (array_key_exists('email', $_POST)) {
+        $torcedor->setEmail($_POST['email']);
     } else {
-        $torcedor['email'] = 0;
+        $torcedor->setEmail('');
     }
 
-    editar_torcedor($torcedor, $conexao);
+    if (array_key_exists('ativo', $_POST)) {
+        $torcedor->setAtivo(1);
+    } else {
+        $torcedor->setAtivo(0);
+    }
+
+    $repositorio_torcedores->editar_torcedor($torcedor, $conexao);
     header('Location: torcedores.php');
     die();
 }
