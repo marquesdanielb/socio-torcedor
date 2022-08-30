@@ -18,4 +18,4 @@
 
 <p>Caso tenha sugestões ou dúvidas, você pode entrar em contato comigo através do email <b>marquesdanielb@gmail.com</b>, não fique incomodado ou algo assim, todas as sugestões são muito bem-vindas para quem quer aprender.</p>
 
-<p>Informação inútil: Esse sistema foi pensado após eu ver o jogo Flamengo e Botafogo e tentar imaginar como seria um sistema de gerenciamento de torcedores, é óbvio que esse sistema não está nem perto de atender a uma demanda igual a do Flamengo e do Botafogo, mas foi um bom exercício. 😁</p>
+<p>Informação inútil: Esse sistema foi pensado após eu ver o jogo Flamengo e Botafogo e tentar imaginar como seria um sistema de gerenciamento de torcedores, é óbvio que esse sistema não está nem perto de atender a uma demanda igual a do Flamengo e do Botafogo, mas est um bom exercício. 😁</p>
