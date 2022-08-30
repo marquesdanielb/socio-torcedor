@@ -1,10 +1,12 @@
 <?php
 
+namespace Torcedores\Models;
+
 class RepositorioTorcedores
 {
     private $pdo;
 
-    public function __construct(PDO $pdo)
+    public function __construct(\PDO $pdo)
     {
         $this->pdo = $pdo;
     }
@@ -63,7 +65,7 @@ class RepositorioTorcedores
     public function buscar_torcedores(): array
     {
         $sqlBusca = "SELECT * FROM torcedores";
-        $resultado = $this->pdo->query($sqlBusca, PDO::FETCH_CLASS, 'Torcedor');
+        $resultado = $this->pdo->query($sqlBusca, \PDO::FETCH_CLASS, 'Torcedores\Models\Torcedor');
         
         $torcedores = [];
         
@@ -83,7 +85,7 @@ class RepositorioTorcedores
             'id' => $torcedor_id,
         ]);
 
-        $torcedor = $query->fetchObject('Torcedor');
+        $torcedor = $query->fetchObject('Torcedores\Models\Torcedor');
 
         return $torcedor;
     }

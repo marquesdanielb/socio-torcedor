@@ -5,7 +5,7 @@ $exibir_tabela = true;
 $tem_erros = false;
 $erros_validacao = [];
 
-$torcedor = new Torcedor();
+$torcedor = new Torcedores\Models\Torcedor();
 $torcedor->setAtivo(true);
 
 if (array_key_exists('nome', $_POST)) {

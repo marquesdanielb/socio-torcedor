@@ -1,10 +1,11 @@
 <?php
 
+use Torcedores\Models\RepositorioTorcedores;
+
+require "vendor/autoload.php";
 require "config.php";
 require "helpers/banco.php";
 require "helpers/ajudantes.php";
-require "models/Torcedor.php";
-require "models/RepositorioTorcedores.php";
 
 $repositorio_torcedores = new RepositorioTorcedores($pdo);
 

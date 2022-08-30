@@ -1,0 +1,19 @@
+{
+    "name": "daniel/torcedores",
+    "description": "Um sistema gerenciador de sócio-torcedores",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Torcedores\\Models\\": "models"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    },
+    "authors": [
+        {
+            "name": "Daniel Marques Barbosa",
+            "email": "marquesdanielb@gmail.com"
+        }
+    ]
+}

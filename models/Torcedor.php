@@ -1,5 +1,7 @@
 <?php
 
+namespace Torcedores\Models;
+
 class Torcedor
 {
     private $id = 0;
