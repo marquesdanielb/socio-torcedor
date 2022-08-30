@@ -6,7 +6,7 @@
 
 <h2>Qual a funcionalidade deste sistema? 🤔</h2>
 
-<p>Esse sistema tem como intuito guardar, em uma base de dados, as informaçõe pertinentes a cada torcedor.</p>
+<p>Esse sistema tem como intuito guardar, em uma base de dados, as informações pertinentes a cada torcedor.</p>
 
 <h2>E quais serão as próximos implementações deste sistema? 😐</h2>
 
